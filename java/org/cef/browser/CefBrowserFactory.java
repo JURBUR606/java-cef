@@ -4,6 +4,7 @@
 
 package org.cef.browser;
 
+import org.cef.CefBrowserSettings;
 import org.cef.CefClient;
 
 /**
@@ -13,5 +14,10 @@ public class CefBrowserFactory {
     public static CefBrowser create(CefClient client, String url,
             boolean isTransparent, CefRequestContext context) {
         return new CefBrowserOsr(client, url, isTransparent, context);
+    }
+
+    public static CefBrowser create(CefClient client, String url, boolean isTransparent,
+            CefRequestContext context, CefBrowserSettings settings) {
+        return new CefBrowserOsr(client, url, isTransparent, context, settings);
     }
 }
