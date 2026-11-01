@@ -129,11 +129,6 @@ set_property(GLOBAL PROPERTY OS_FOLDERS ON)
 # CEF configuration.
 #
 
-# Specify the CEF branch
-if(NOT DEFINED CEF_BRANCH)
-  set(CEF_BRANCH "5845")
-endif()
-
 # Specify the CEF distribution version.
 if(NOT DEFINED CEF_VERSION)
   set(CEF_VERSION "152.0.6+g708dc14+chromium-152.0.7977.83")
@@ -153,13 +148,17 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(CEF_PLATFORM "macosx64")
   endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-  if(CMAKE_SIZEOF_VOID_P MATCHES 8)
+  if("${PROJECT_ARCH}" STREQUAL "arm64")
+    set(CEF_PLATFORM "linuxarm64")
+  elseif(CMAKE_SIZEOF_VOID_P MATCHES 8)
     set(CEF_PLATFORM "linux64")
   else()
     set(CEF_PLATFORM "linux32")
   endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-  if(CMAKE_SIZEOF_VOID_P MATCHES 8)
+  if("${PROJECT_ARCH}" STREQUAL "arm64")
+    set(CEF_PLATFORM "windowsarm64")
+  elseif(CMAKE_SIZEOF_VOID_P MATCHES 8)
     set(CEF_PLATFORM "windows64")
   else()
     set(CEF_PLATFORM "windows32")
@@ -171,7 +170,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Download and extract the CEF binary distribution (executes DownloadCEF.cmake).
 include(DownloadCEF)
-DownloadCEF("${CEF_PLATFORM}" "${CEF_BRANCH}" "${CEF_VERSION}" "${CMAKE_SOURCE_DIR}/third_party/cef")
+DownloadCEF("${CEF_PLATFORM}" "${CEF_VERSION}" "${CMAKE_SOURCE_DIR}/third_party/cef")
 
 # Add the CEF binary distribution's cmake/ directory to the module path.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CEF_ROOT}/cmake")
