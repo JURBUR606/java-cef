@@ -5,9 +5,7 @@
 package tests.detailed.handler;
 
 import org.cef.callback.CefCallback;
-import org.cef.callback.CefResourceReadCallback;
 import org.cef.handler.CefResourceHandlerAdapter;
-import org.cef.misc.BoolRef;
 import org.cef.misc.IntRef;
 import org.cef.misc.StringRef;
 import org.cef.network.CefRequest;
@@ -35,8 +33,7 @@ public class ClientSchemeHandler extends CefResourceHandlerAdapter {
     }
 
     @Override
-    public synchronized boolean open(
-            CefRequest request, BoolRef handleRequest, CefCallback callback) {
+    public synchronized boolean processRequest(CefRequest request, CefCallback callback) {
         boolean handled = false;
         String url = request.getURL();
         if (url.indexOf("handler.html") != -1) {
@@ -80,10 +77,9 @@ public class ClientSchemeHandler extends CefResourceHandlerAdapter {
             }
         }
 
-        // All requests are handled immediately
-        handleRequest.set(true);
-
         if (handled) {
+            // Indicate the headers are available.
+            callback.Continue();
             return true;
         }
 
@@ -101,8 +97,8 @@ public class ClientSchemeHandler extends CefResourceHandlerAdapter {
     }
 
     @Override
-    public synchronized boolean read(byte[] data_out, int bytes_to_read, IntRef bytes_read,
-            CefResourceReadCallback callback) {
+    public synchronized boolean readResponse(
+            byte[] data_out, int bytes_to_read, IntRef bytes_read, CefCallback callback) {
         boolean has_data = false;
 
         if (offset_ < data_.length) {

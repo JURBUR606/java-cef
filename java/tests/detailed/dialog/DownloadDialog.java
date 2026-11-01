@@ -150,7 +150,6 @@ public class DownloadDialog extends JDialog implements CefDownloadHandler {
         DownloadObject dlObject = new DownloadObject(downloadItem, suggestedName);
         downloadObjects_.put(downloadItem.getId(), dlObject);
         downloadPanel_.add(dlObject);
-
         return true;
     }
 
