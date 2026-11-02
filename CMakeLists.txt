@@ -131,7 +131,8 @@ set_property(GLOBAL PROPERTY OS_FOLDERS ON)
 
 # Specify the CEF distribution version.
 if(NOT DEFINED CEF_VERSION)
-  set(CEF_VERSION "152.0.6+g708dc14+chromium-152.0.7977.83")
+  # Codec-enabled build from OBS (see cmake/DownloadCEF.cmake)
+  set(CEF_VERSION "150.0.20+gc4b3522+chromium-150.0.7871.252")
 endif()
 
 # Determine the platform.
