@@ -652,10 +652,8 @@ jobject NewJNIErrorCode(JNIEnv* env, cef_errorcode_t errorCode) {
                ERR_PROXY_DELEGATE_CANCELED_CONNECT_REQUEST, jerrorCode);
       JNI_CASE(env, "org/cef/handler/CefLoadHandler$ErrorCode",
                ERR_PROXY_DELEGATE_CANCELED_CONNECT_RESPONSE, jerrorCode);
-      JNI_CASE(env, "org/cef/handler/CefLoadHandler$ErrorCode",
-               ERR_CONTROL_MSG_TOO_BIG, jerrorCode);
-      JNI_CASE(env, "org/cef/handler/CefLoadHandler$ErrorCode",
-               ERR_MULTICAST_NOT_ALLOWED, jerrorCode);
+      // ERR_CONTROL_MSG_TOO_BIG: not in CEF 150 (codec build from OBS)
+      // ERR_MULTICAST_NOT_ALLOWED: not in CEF 150 (codec build from OBS)
       JNI_CASE(env, "org/cef/handler/CefLoadHandler$ErrorCode",
                ERR_CERT_COMMON_NAME_INVALID, jerrorCode);
       JNI_CASE(env, "org/cef/handler/CefLoadHandler$ErrorCode",
@@ -927,8 +925,7 @@ jobject NewJNIErrorCode(JNIEnv* env, cef_errorcode_t errorCode) {
                jerrorCode);
       JNI_CASE(env, "org/cef/handler/CefLoadHandler$ErrorCode",
                ERR_DNS_OTHER_FAILURE, jerrorCode);
-      JNI_CASE(env, "org/cef/handler/CefLoadHandler$ErrorCode",
-               ERR_DNS_DIRECT_ONLY, jerrorCode);
+      // ERR_DNS_DIRECT_ONLY: not in CEF 150 (codec build from OBS)
       JNI_CASE(env, "org/cef/handler/CefLoadHandler$ErrorCode",
                ERR_BLOB_INVALID_CONSTRUCTION_ARGUMENTS, jerrorCode);
       JNI_CASE(env, "org/cef/handler/CefLoadHandler$ErrorCode",
