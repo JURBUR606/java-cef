@@ -95,6 +95,12 @@ public class CefSettings {
     public boolean windowless_rendering_enabled = true;
 
     /**
+     * Disable the Chromium sandbox. Only honored on macOS (MCEF fork); Windows and Linux always run
+     * without it because the browser process is the JVM.
+     */
+    public boolean no_sandbox = true;
+
+    /**
      * Set to true to disable configuration of browser process features using
      * standard CEF and Chromium command-line arguments. Configuration can still
      * be specified using CEF data structures or via the
@@ -278,6 +284,7 @@ public class CefSettings {
         tmp.main_bundle_path = main_bundle_path;
         tmp.browser_subprocess_path = browser_subprocess_path;
         tmp.windowless_rendering_enabled = windowless_rendering_enabled;
+        tmp.no_sandbox = no_sandbox;
         tmp.command_line_args_disabled = command_line_args_disabled;
         tmp.cache_path = cache_path;
         tmp.root_cache_path = root_cache_path;

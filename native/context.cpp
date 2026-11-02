@@ -39,6 +39,7 @@ CefSettings GetJNISettings(JNIEnv* env, jobject obj) {
   }
   GetJNIFieldBoolean(env, cls, obj, "windowless_rendering_enabled",
                      &settings.windowless_rendering_enabled);
+  GetJNIFieldBoolean(env, cls, obj, "no_sandbox", &settings.no_sandbox);
   GetJNIFieldBoolean(env, cls, obj, "command_line_args_disabled",
                      &settings.command_line_args_disabled);
   if (GetJNIFieldString(env, cls, obj, "cache_path", &tmp) && !tmp.empty()) {
@@ -200,11 +201,19 @@ bool Context::Initialize(JNIEnv* env,
 
   CefSettings settings = GetJNISettings(env, jsettings);
 
+#if !defined(OS_MACOSX)
   // Sandbox is not supported because:
-  // - Use of a separate sub-process executable on Windows.
+  // - Use of a separate sub-process executable on Windows (since M138 the
+  //   Windows sandbox needs the browser process started by CEF's bootstrap).
   // - Use of a temporary file to communicate custom schemes to the
   //   renderer process.
   settings.no_sandbox = true;
+#else
+  // MCEF fork: on macOS every helper initializes its own sandbox
+  // (CefScopedSandboxContext in jcef_helper.cpp), so CefSettings.no_sandbox
+  // can turn it on. Sandboxed renderers cannot read the custom-scheme temp
+  // file, so custom schemes are unavailable then (MCEF registers none).
+#endif
 
 #if defined(OS_WIN) || defined(OS_LINUX)
   // Use external message pump with OSR.
